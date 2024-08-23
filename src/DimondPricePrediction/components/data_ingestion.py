@@ -39,7 +39,7 @@ class DataIngestion:
             data.to_csv(self.ingestion_config.raw_data_path,index=False)
             logging.info("i have saved the raw data set in artifact folder")
 
-            logging.into("here i have perform train test split")
+            logging.info("here i have perform train test split")
 
             train_data,test_data=train_test_split(data,test_size=0.25)
             logging.info("train test split complited")
