@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from src.DimondPricePrediction.logger import logging
@@ -8,6 +9,11 @@ from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from pathlib import Path
 
+class DataIngestionconfig:
+    raw_data_path:str=os.path.join("artifacts","raw.csv")
+    train_data_path:str=os.path.join("artifacts","train.csv")
+    test_data_path:str=os.path.join("artifacts","test.csv")
+
 
 
 
@@ -15,7 +21,9 @@ from pathlib import Path
 
 class DataIngestion:
     def __init__(self):
-        pass
+        self.ingestion_config=DataIngestionconfig()
+
+    
 
 
 
@@ -27,15 +35,23 @@ class DataIngestion:
             data=pd.read_csv(Path(os.path.join("notebooks/data","gemstone.csv")))
             logging.info("i have read the data frame")
 
+            os.makedirs(os.path.join(self.ingestion_config.raw_data_path).exists=True)
+            data.to_csv(self.ingestion_config.raw_data_path,index=False)
+            logging.info("i have saved the raw data set in artifact folder")
 
             logging.into("here i have perform train test split")
 
             train_data,test_data=train_test_split(data,test_size=0.25)
             logging.info("train test split complited")
+            train_data.to_csv(self.ingestion_config.train_data_path,index=False)
+            test_data.to_csv(self.ingeston_config.test_data_path,index=False)
 
+            logging.info("data ingestion part complited..")
 
 
 
         except Exception as e:
-            pass
+            logging.info("exception during occured at data ingestion stage")
+            raise customexception(e,sys)
+        
 
