@@ -2,14 +2,14 @@ import os
 import pandas as pd
 import numpy as np
 from src.DimondPricePrediction.logger import logging
-from src.DimondPricePrediction.exception import exception
+from src.DimondPricePrediction.exception import customexception
 
-
+import sys
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from pathlib import Path
 
-class DataIngestionconfig:
+class DataIngestionConfig:
     raw_data_path:str=os.path.join("artifacts","raw.csv")
     train_data_path:str=os.path.join("artifacts","train.csv")
     test_data_path:str=os.path.join("artifacts","test.csv")
@@ -21,7 +21,7 @@ class DataIngestionconfig:
 
 class DataIngestion:
     def __init__(self):
-        self.ingestion_config=DataIngestionconfig()
+        self.ingestion_config=DataIngestionConfig()
 
     
 
@@ -35,7 +35,7 @@ class DataIngestion:
             data=pd.read_csv(Path(os.path.join("notebooks/data","gemstone.csv")))
             logging.info("i have read the data frame")
 
-            os.makedirs(os.path.join(self.ingestion_config.raw_data_path).exists=True)
+            os.makedirs(os.path.dirname(os.path.join(self.ingestion_config.raw_data_path)),exist_ok=True)
             data.to_csv(self.ingestion_config.raw_data_path,index=False)
             logging.info("i have saved the raw data set in artifact folder")
 
@@ -44,7 +44,7 @@ class DataIngestion:
             train_data,test_data=train_test_split(data,test_size=0.25)
             logging.info("train test split complited")
             train_data.to_csv(self.ingestion_config.train_data_path,index=False)
-            test_data.to_csv(self.ingeston_config.test_data_path,index=False)
+            test_data.to_csv(self.ingestion_config.test_data_path,index=False)
 
             logging.info("data ingestion part complited..")
 
