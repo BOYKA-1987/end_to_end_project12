@@ -11,8 +11,8 @@ def home_page():
 
 
 @app.route("/predict",methods=["GET","POST"])
-def predict_datapoints():
-    if request.method == "POST":
+def predict_datapoint():
+    if request.method == "GET":
         return render_template("form.html")
 
 
@@ -41,4 +41,4 @@ def predict_datapoints():
 
 #execution begin
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
